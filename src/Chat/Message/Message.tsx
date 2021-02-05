@@ -4,7 +4,6 @@ import TimelineConnector from "@material-ui/lab/TimelineConnector";
 import TimelineContent from "@material-ui/lab/TimelineContent";
 import TimelineOppositeContent from "@material-ui/lab/TimelineOppositeContent";
 import TimelineDot from "@material-ui/lab/TimelineDot";
-import FastfoodIcon from "@material-ui/icons/Fastfood";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
@@ -20,20 +19,24 @@ const useStyles = makeStyles((theme) => ({
   timelineOppositeContent: {
     flex: 0,
     display: 'none'
+  },
+  mine: {
+    backgroundColor: 'rgba(0, 0, 0, 0.2)'
   }
 }));
 
 export interface MessageO {
   username: string;
-  hour: Date;
+  hour: number;
   message: string;
   sent: boolean;
   read: boolean;
+  myUsername: string;
 }
 
 export class MessageO {
   username: string = "";
-  hour: Date = new Date()
+  hour: number = new Date().getTime();
   message: string = "";
   sent: boolean = false;
   read: boolean = false;
@@ -44,9 +47,8 @@ export class MessageO {
   }
 }
 
-export default function Message({ username, hour, message, sent, read }: MessageO) {
+export default function Message({ username, hour, message, sent, read, myUsername }: MessageO) {
   const classes = useStyles();
-  const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
   return (
     <TimelineItem>
       <TimelineOppositeContent className={classes.timelineOppositeContent}>
@@ -57,13 +59,13 @@ export default function Message({ username, hour, message, sent, read }: Message
         </TimelineDot>
         <TimelineConnector />
       </TimelineSeparator>
-      <TimelineContent>
-        <Paper elevation={3} className={classes.paper}>
+      <TimelineContent >
+        <Paper elevation={3} className={`${classes.paper} ${username !== myUsername ? classes.mine : ''}`}>
           <Typography variant="subtitle1" component="p">
             {username}
           </Typography>
           <Typography variant="body2">
-            {`${hour.toLocaleDateString('es-ES')} - ${hour.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })}`}
+            {`${new Date(hour).toLocaleDateString('es-ES')} - ${new Date(hour).toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })}`}
           </Typography>
           <Divider />
           <Typography>{message}</Typography>

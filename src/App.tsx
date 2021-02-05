@@ -1,34 +1,61 @@
 import './App.css';
 import Chat from './Chat/Chat';
-import MessageInput from './MessageInput/MessageInput';
 import Container from '@material-ui/core/Container';
-// import { makeStyles } from "@material-ui/core/styles";
-import { MessageO } from './Chat/Message/Message';
+import { io, Socket } from 'socket.io-client';
+import SignIn from './SignIn/SignIn';
 import { useState } from 'react';
+import { useEffect } from 'react';
+import { SupervisedUserCircle } from '@material-ui/icons'
+import ConnectedUsers from './ConnectedUsers/ConnectedUsers';
 
-// const useStyles = makeStyles((theme) => ({
-//   messageInput: {
-//     bottom: '1px'
-//   }
-// }));
+
+const socket: Socket = io(process.env.REACT_APP_SERVER_URL + '');
+
 function App() {
-  // const classes = useStyles();
-  const [messages, addMessage] = useState<MessageO[]>([new MessageO('Salva', 'This is a message')])
-  // const messages: MessageO[] = [new MessageO('Salva', 'This is a message')]
+  const [userName, setUserName] = useState('')
+  const [showUsers, setShowUsers] = useState(false)
+  const [users, setUsers] = useState<string[]>([])
 
-  const sendMessage = (message: string): void => {
-    console.log(message)
-    if (message) {
-      addMessage(oldMessages => [...oldMessages, new MessageO('Pepe', message)])
+  useEffect(() => {
+    socket.on('connected users', (users: string[]) => {
+      console.log(users)
+      setUsers(users)
+    })
+    return () => {
+      socket.off('connected users')
     }
+  }, [users])
+
+  const onShowUsers = () => {
+    setShowUsers(true)
+  }
+
+  const onHideUsers = () => {
+    setShowUsers(false)
   }
 
   return (
-    <Container maxWidth="xl">
-      <Chat messages={messages} />
-      <MessageInput sendMessage={sendMessage} />
+    <Container maxWidth="xl" >
+      <div style={{ width: 'fit-content', position: 'absolute', zIndex: 1, right: '5px' }} onMouseEnter={onShowUsers} onMouseLeave={onHideUsers}>
+        <SupervisedUserCircle style={{ width: '100px', height: '100px' }} />
+      </div>
+      {
+        showUsers
+          ?
+          <ConnectedUsers onShowUsers={onShowUsers} onHideUsers={onHideUsers} socket={socket} users={users} />
+          :
+          ''
+      }
+      {
+        !userName.length
+          ?
+          <SignIn socket={socket} setUserName={setUserName}></SignIn>
+          :
+          <Chat socket={socket} userName={userName} />
+      }
     </Container>
   );
+
 }
 
 export default App;
