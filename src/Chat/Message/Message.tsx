@@ -8,7 +8,7 @@ import FastfoodIcon from "@material-ui/icons/Fastfood";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
-import { Divider } from "@material-ui/core";
+import { Avatar, Divider } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -53,7 +53,7 @@ export default function Message({ username, hour, message, sent, read }: Message
       </TimelineOppositeContent>
       <TimelineSeparator>
         <TimelineDot>
-          <FastfoodIcon />
+          <Avatar>{username.slice(0, 2).toUpperCase()}</Avatar>
         </TimelineDot>
         <TimelineConnector />
       </TimelineSeparator>

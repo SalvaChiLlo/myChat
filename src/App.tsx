@@ -19,7 +19,7 @@ function App() {
   const sendMessage = (message: string): void => {
     console.log(message)
     if (message) {
-      addMessage(oldMessages => [...oldMessages, new MessageO('Salva', message)])
+      addMessage(oldMessages => [...oldMessages, new MessageO('Pepe', message)])
     }
   }
 
