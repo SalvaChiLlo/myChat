@@ -35,7 +35,7 @@ export default function ConnectedUsers({ onShowUsers, onHideUsers, socket, users
 
   return (
     <div
-      style={{ position: 'absolute', right: '5px', top: '95px' }}
+      style={{ position: 'absolute', right: '5px', top: '95px', zIndex: 1, backgroundColor: 'white' }}
       onMouseEnter={onShowUsers}
       onMouseLeave={onHideUsers}
     >
