@@ -12,6 +12,7 @@ import ConnectedUsers from './ConnectedUsers/ConnectedUsers';
 const socket: Socket = io(process.env.REACT_APP_SERVER_URL + '');
 
 function App() {
+  console.log(process.env.REACT_APP_SERVER_URL)
   const [userName, setUserName] = useState('')
   const [showUsers, setShowUsers] = useState(false)
   const [users, setUsers] = useState<string[]>([])
