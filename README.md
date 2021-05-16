@@ -1,6 +1,6 @@
-This is a little project that I made for learning about MaterialUI and Socket.io
+### This is a little project that I made for learning about MaterialUI and Socket.io
 
-**In the first launch it is possible that the chat takes some seconds to allow you to enter, this is due to heroku limitations.
+** In the first launch it is possible that the chat takes some seconds to allow you to enter, this is due to heroku limitations.
 
 
 # Getting Started with Create React App
