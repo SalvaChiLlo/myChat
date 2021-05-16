@@ -2,6 +2,8 @@
 
 ** In the first launch it is possible that the chat takes some seconds to allow you to enter, this is due to heroku limitations.
 
+Backend code can be found here: (https://github.com/SalvaChiLlo/myChat_Server)
+
 
 # Getting Started with Create React App
 
